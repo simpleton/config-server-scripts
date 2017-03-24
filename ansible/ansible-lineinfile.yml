@@ -1,0 +1,29 @@
+## credit: http://fabian-affolter.ch/blog/the-lineinfile-module-of-ansible/
+--- 
+- hosts: all
+  user: root
+ 
+  tasks:
+  - name: modify the line 'ChallengeResponseAuthentication'
+    lineinfile: dest=/etc/ssh/sshd_config
+                state=present
+                regexp='^ChallengeResponseAuthentication(.*)yes(.*)$'
+                line='ChallengeResponseAuthentication\1no\2'
+                backrefs=yes
+
+  - name: modify the line 'PasswordAuthentication'
+    lineinfile: dest=/etc/ssh/sshd_config
+                state=present
+                regexp='^PasswordAuthentication(.*)yes(.*)$'
+                line='PasswordAuthentication\1no\2'
+                backrefs=yes
+
+  - name: moidfy the line 'UsePAM'
+    lineinfile: dest=/etc/ssh/sshd_config
+                state=present
+                regexp='^UsePAM(.*)yes(.*)$'
+                line='UsePAM\1no\2'
+                backrefs=yes
+
+  - name: restart sshd
+    command: /etc/init.d/ssh restart
