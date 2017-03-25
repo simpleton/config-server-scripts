@@ -18,7 +18,7 @@ function valid_ip()
 
 for ip in `cat ./hosts`; do
     if valid_ip $ip; then
-        ssh-copy-id -i ~/.ssh/id_rsa.pub $ip
+        ssh-copy-id -f -i ~/Desktop/id_rsa.pub "root@$ip"
     fi
 done
 
